@@ -41,5 +41,6 @@ public class BankAccountMapper {
         dto.setId(op.getId()); dto.setOperationDate(op.getOperationDate());
         dto.setAmount(op.getAmount()); dto.setType(op.getType());
         return dto;
+
     }
 }
