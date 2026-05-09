@@ -23,14 +23,33 @@ public class BankAccountService {
     public BankAccountDTO saveAccount(BankAccountDTO dto, Long customerId) {
         Customer c = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
-        BankAccount acc = (dto instanceof CurrentAccountDTO) ?
-                new CurrentAccount(UUID.randomUUID().toString(), dto.getBalance(),
-                        LocalDate.now(), dto.getStatus(), c, ((CurrentAccountDTO) dto).getOverDraft()) :
-                new SavingsAccount(UUID.randomUUID().toString(), dto.getBalance(),
-                        LocalDate.now(), dto.getStatus(), c, ((SavingsAccountDTO) dto).getInterestRate());
+
+        BankAccount acc;
+
+        if (dto instanceof CurrentAccountDTO) {
+            CurrentAccountDTO currentDTO = (CurrentAccountDTO) dto;
+            CurrentAccount currentAccount = new CurrentAccount();
+            currentAccount.setId(UUID.randomUUID().toString());
+            currentAccount.setBalance(currentDTO.getBalance());
+            currentAccount.setCreatedAt(LocalDate.now());
+            currentAccount.setStatus(currentDTO.getStatus());
+            currentAccount.setCustomer(c);
+            currentAccount.setOverDraft(currentDTO.getOverDraft());
+            acc = currentAccount;
+        } else {
+            SavingsAccountDTO savingsDTO = (SavingsAccountDTO) dto;
+            SavingsAccount savingsAccount = new SavingsAccount();
+            savingsAccount.setId(UUID.randomUUID().toString());
+            savingsAccount.setBalance(savingsDTO.getBalance());
+            savingsAccount.setCreatedAt(LocalDate.now());
+            savingsAccount.setStatus(savingsDTO.getStatus());
+            savingsAccount.setCustomer(c);
+            savingsAccount.setInterestRate(savingsDTO.getInterestRate());
+            acc = savingsAccount;
+        }
+
         return mapper.fromBankAccount(accountRepo.save(acc));
     }
-
     public List<BankAccountDTO> listAccounts() {
         return accountRepo.findAll().stream().map(mapper::fromBankAccount).collect(Collectors.toList());
     }
