@@ -11,7 +11,9 @@ public class AccountOperation {
     private Long id;
     private LocalDate operationDate;
     private double amount;
-    @Enumerated(EnumType.STRING) private OperationType type;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    private OperationType type;
+    @ManyToOne
     private BankAccount bankAccount;
+    private String description;
 }

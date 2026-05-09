@@ -7,7 +7,7 @@ import lombok.*;
 @Entity
 @DiscriminatorValue("SAVINGS")
 @Data
-@EqualsAndHashCode(callSuper = true)
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class SavingsAccount extends BankAccount {
