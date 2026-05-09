@@ -1,0 +1,22 @@
+package ma.enset.bankappbackend.entities;
+
+
+import ma.enset.bankappbackend.enums.AccountStatus;
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 10)
+@Data @NoArgsConstructor @AllArgsConstructor
+public abstract class BankAccount {
+    @Id private String id;
+    private double balance;
+    private LocalDate createdAt;
+    @Enumerated(EnumType.STRING) private AccountStatus status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer;
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)
+    private List<AccountOperation> operations;
+}
