@@ -4,12 +4,15 @@ import ma.enset.bankappbackend.enums.OperationType;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.Date;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class AccountOperation {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate operationDate;
+    private Date operationDate;
     private double amount;
     @Enumerated(EnumType.STRING)
     private OperationType type;

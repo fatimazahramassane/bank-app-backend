@@ -2,4 +2,7 @@ package ma.enset.bankappbackend.repositories;
 
 import ma.enset.bankappbackend.entities.BankAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
-public interface BankAccountRepository extends JpaRepository<BankAccount, String> {}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BankAccountRepository extends JpaRepository<BankAccount,String> {
+}
